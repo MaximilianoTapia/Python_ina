@@ -8,7 +8,7 @@ Esta es una **implementación didáctica** del último diagrama de clases UML co
 - `demo.py`: caso de uso ejecutable (alta de empleados, departamentos, proyectos, horas e informes).
 - `test_ecotech.py`: pruebas automáticas con `unittest`.
 - `requirements.txt`: librerías para generar PDF y Excel.
-- `UML_definitivocorregido.drawio.png`: imagen original del diagrama para comparar.
+- `UML_definitivo_corregido.mmd`: código Mermaid del diagrama corregido, editable en draw.io.
 
 ## Ejecutar con Python 3.10 o superior
 
@@ -59,4 +59,4 @@ El UML no define **cómo persistir en una base de datos** ni una interfaz de usu
 
 ## Límites de este prototipo
 
-No es una solución lista para producción: faltan una base de datos, permisos granulares, auditoría, controles de privacidad, manejo de sesiones, protección de datos en reposo y una interfaz. Las contraseñas se guardan como derivaciones PBKDF2 con sal aleatoria, no en texto plano, pero el ejemplo no sustituye una revisión de seguridad real. Los datos de prueba y las claves de la demostración son **ficticios**.
+No es una solución lista para producción: faltan una base de datos, permisos granulares, auditoría, controles de privacidad, manejo de sesiones, protección de datos en reposo y una interfaz. Las contraseñas se guardan como derivaciones PBKDF2 con sal aleatoria, no en texto plano, pero el ejemplo no sustituye una revisión de seguridad real. Los datos de prueba son **ficticios** y la demostración genera contraseñas aleatorias en cada ejecución.
