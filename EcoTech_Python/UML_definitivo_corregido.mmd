@@ -1,0 +1,117 @@
+classDiagram
+direction LR
+
+class Usuario {
+    -int idUsuario
+    -String correo
+    -String contrasenaHash
+    -boolean activo
+    +tienePermiso(accion) boolean
+    +cambiarContrasena()
+}
+class Administrador {
+    +solicitarGestion()
+    +solicitarInforme()
+}
+class ServicioAutenticacion {
+    +autenticar(correo, clave)
+    +verificarAcceso(usuario, accion)
+}
+class Empleado {
+    -int idEmpleado
+    -String nombre
+    -String direccion
+    -String telefono
+    -String correo
+    -Date fechaContrato
+    -Decimal salario
+    +actualizarDatos()
+    +consultarProyectos()
+}
+class Departamento {
+    -int idDepartamento
+    -String nombre
+    +actualizarNombre()
+    +asignarGerente()
+}
+class Proyecto {
+    -int idProyecto
+    -String nombre
+    -String descripcion
+    -Date fechaInicio
+    +actualizarDatos()
+}
+class AsignacionProyecto {
+    -int idAsignacion
+    -Date fechaAsignacion
+    -Date fechaTermino
+    -String estado
+    +activar()
+    +finalizar()
+    +estaActiva() boolean
+}
+class RegistroTiempo {
+    -int idRegistro
+    -Date fecha
+    -Decimal horasTrabajadas
+    -String descripcionTarea
+    +validarHoras() boolean
+}
+class ServicioGestion {
+    +registrarEmpleado()
+    +generarIdEmpleado()
+    +crearDepartamento()
+    +buscarDepartamento()
+    +eliminarDepartamento()
+    +crearProyecto()
+    +eliminarProyecto()
+    +asignarProyecto()
+    +finalizarAsignacion()
+}
+class ServicioRegistroTiempo {
+    +validarAsignacion()
+    +validarFecha()
+    +validarHoras()
+    +crearRegistro()
+}
+class GeneradorInforme {
+    +informeEmpleados()
+    +informeProyectos()
+    +informeDepartamentos()
+    +informeHoras()
+    +generar(exportador)
+}
+class ExportadorInforme {
+    <<abstract>>
+    +exportar(datos)
+}
+class ExportadorPDF {
+    +exportar(datos)
+}
+class ExportadorExcel {
+    +exportar(datos)
+}
+
+Usuario <|-- Administrador
+Empleado "1" -- "0..1" Usuario : cuenta
+ServicioAutenticacion ..> Usuario : valida
+Departamento "0..1" -- "0..*" Empleado : pertenece
+Departamento "0..1" --> "1" Empleado : tiene gerente
+Empleado "1" -- "0..*" AsignacionProyecto : participa
+Proyecto "1" -- "0..*" AsignacionProyecto : recibe
+AsignacionProyecto "1" -- "0..*" RegistroTiempo : contiene
+Administrador ..> ServicioGestion : solicita
+Administrador ..> GeneradorInforme : solicita
+ServicioGestion ..> Empleado : gestiona
+ServicioGestion ..> Departamento : gestiona
+ServicioGestion ..> Proyecto : gestiona
+ServicioGestion ..> AsignacionProyecto : administra
+ServicioRegistroTiempo ..> AsignacionProyecto : verifica
+ServicioRegistroTiempo ..> RegistroTiempo : valida
+GeneradorInforme ..> ExportadorInforme : utiliza
+GeneradorInforme ..> RegistroTiempo : consulta
+GeneradorInforme ..> Empleado : consulta
+GeneradorInforme ..> Proyecto : consulta
+GeneradorInforme ..> Departamento : consulta
+ExportadorInforme <|-- ExportadorPDF
+ExportadorInforme <|-- ExportadorExcel
